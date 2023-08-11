@@ -1,11 +1,16 @@
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './App.css'
-import { TodoPage } from './pages/todo.page'
-
+import { productRoute } from './pages/todo'
+import { Suspense } from 'react'
+const router = createBrowserRouter([
+  productRoute
+])
 function App() {
-
   return (
     <>
-      <TodoPage/>
+      <Suspense fallback={null}>
+        <RouterProvider router={router}/>
+      </Suspense>
     </>
   )
 }
