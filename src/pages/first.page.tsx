@@ -1,11 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { makeObservable, observable, action, computed, runInAction } from "mobx"
+import {  runInAction, makeAutoObservable } from "mobx"
 
 class Parent {
     value = 0
     x = 0
     y = 0
-    array = [ 1, { value: 'value', nested: { value: 'nested value' } }]
+    name = ''
+    array = [1,2,3,4,5,6]
     object = {
       value: 0,
       nested: {
@@ -13,17 +14,18 @@ class Parent {
       }
     }
     constructor() {
-        makeObservable(this, {
-            value: observable,
-            increment: action,
-            decrement: action.bound,
-            nestedObject: computed,
-            changeX: action.bound,
-            array: observable,
-            x: observable,
-            object: observable,
-            changeObjectByRef: action
-        })
+      makeAutoObservable(this)
+    }
+    changeName (name: string) {
+      this.name = name
+    }
+    get isShortName(){
+      if(this.name.length < 4) {
+        console.log('short name')
+        return this.name.length
+      }
+      console.log('long name')
+      return this.name.length 
     }
     get nestedObject(){
         return {
@@ -43,25 +45,41 @@ class Parent {
     changeX() {
       this.x++;
     }
+    changeArray(){
+      this.array[6] = 7
+    }
 }
-const array = Array.from({ length: 5 }, (_, i) => i + 1)
+
+
+// const array = Array.from({ length: 5 }, (_, i) => i + 1)
 export const parent = new Parent()
+// reaction(() => parent.isShortName, (isShortName) => console.log('is short name', isShortName))
+// autorun(() => {
+//   parent.array.join(', ')
+//   console.log('array changed')
+// })
+
+const name = import.meta.env.NAME
+console.log('aisdjfaoisfd')
 runInAction(() => {
-  console.log(parent.array)
+  parent.array[1] = 123123
 })
 export const Page = observer(() => {
     return (
         <div>
+          <div>Name: {name}</div>
+          <button onClick={() => parent.changeArray()}>Change array</button>
             <button onClick={() => parent.changeX()}></button>
             <h1>x: {parent.x}</h1>
+            <input value={parent.name} onChange={e => parent.changeName(e.target.value)}/>
             <Container/>
-            { array.map((_, index) => {
+            {/* { array.map((_, index) => {
               return (
                 <div key={index}>
                   <Todo increment={() => parent.increment()}/>
                 </div>
               )
-            })}
+            })} */}
         </div>
     )
 })
@@ -72,12 +90,12 @@ const Container = observer(() => {
     </div>
   )
 })
-const Todo = observer(({increment }:{increment:() => void}) => {
-  return (
-    <div>
-      <button onClick={increment}>
-        Increment
-      </button>
-    </div>
-  )
-})
+// const Todo = observer(({increment }:{increment:() => void}) => {
+//   return (
+//     <div>
+//       <button onClick={increment}>
+//         Increment
+//       </button>
+//     </div>
+//   )
+// })

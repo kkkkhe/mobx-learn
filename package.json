@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.33.0",
+    "@tanstack/react-query-devtools": "^4.33.0",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
     "react": "^18.2.0",
@@ -18,11 +20,14 @@
     "tsyringe": "^4.8.0"
   },
   "devDependencies": {
+    "@import-meta-env/cli": "^0.6.4",
+    "@import-meta-env/unplugin": "^0.4.9",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "dotenv": "^16.3.1",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",

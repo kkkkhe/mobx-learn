@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import { $$page } from "./todos.model"
 import { NavLink, useSearchParams } from "react-router-dom"
 import { FormEvent, Fragment } from "react";
+import { toJS } from "mobx";
 
 const Product = observer(() => {
 	const { updateTodo, createTodo, todo } = $$page
